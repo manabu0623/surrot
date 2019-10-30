@@ -23,7 +23,7 @@
     }
 
     // スロットをスタートさせる
-    startSlot(1);
+    startSlot();
 
     // 左右のスロットをスタートさせる処理の中身
     function startSlot() {
