@@ -1,0 +1,28 @@
+@charset "UTF-8";
+.bg_img{
+  background: URL(https://cotodama.co/wp-content/uploads/2018/02/165431963.jpg);
+  wight: 100%;
+  height: 240px;
+  background-size:cover;
+  background-position:50%;
+  position: relative;
+}
+.bg_img::after {
+  content: '';
+  background-color: rgba(0,0,0,.5);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 240px;
+}
+p{
+  margin: 0;
+  padding: .2em;
+  font-size:3.0rem;
+  color: #FFF;
+  font-weight: bold;
+  position: relative;
+  z-index: 1;
+}
