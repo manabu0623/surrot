@@ -9,9 +9,10 @@
 
 
 <body>
+<p>残り時間:<span id="count">30</span></p>
 <p>得点:<span id="score">0</span></p>
     <script language="JavaScript">
-    limit = 5;
+    var count = 30;
     var score = 0;
     var interval = 400;
 	var slotImg = ['seven.jpg','suika.jpg','bar.jpg','beru.jpg','cherry.jpg','jac.jpg'];
@@ -46,7 +47,8 @@
 	    }
 
 	    rotat_f[3] = "ON" ;
-	}
+
+    }
 
 	// 回転
 	function start_prg(r_no) {
@@ -98,6 +100,7 @@
 	      var target = document.getElementById('score');
 	      target.textContent = score;
 	    }
+
 	}
 
     </script>
