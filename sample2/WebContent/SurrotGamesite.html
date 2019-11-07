@@ -9,12 +9,15 @@
 
 
 <body>
-<p>残り時間:<span id="count">30</span></p>
+<p><span id="timer">30</span></p>
 <p>得点:<span id="score">0</span></p>
-    <script language="JavaScript">
-    var count = 30;
-    var score = 0;
-    var interval = 400;
+    <script = language="JavaScript">
+    const timer = document.getElementById('timer');
+    let TIME = 30;
+    let state = true;
+
+    var score = 0; //スコア
+    var interval = 400;//
 	var slotImg = ['seven.jpg','suika.jpg','bar.jpg','beru.jpg','cherry.jpg','jac.jpg'];
 	var pic_loc = ['pic11','pic21','pic31','pic12','pic22','pic32','pic13','pic23','pic33'];
 	var int_p01 = [ 8 , 5 , 4 ];
@@ -49,8 +52,16 @@
 	    rotat_f[3] = "ON" ;
 
     }
+	//制限時間処理
+	const countdown = setInterval(function() {
 
-	// 回転
+        timer.textContent = '制限時間：' + --TIME + '秒';
+        if(TIME <= 0) finish();
+
+}, 1000);
+
+
+	// 回転処理
 	function start_prg(r_no) {
     	    if (start_p[r_no] > 5){ start_p[r_no] = 0 ; }
 
@@ -66,8 +77,7 @@
 
     	    time_id[r_no] = setTimeout(function(){start_prg(r_no)}, int_tim[r_no] + Math.floor( var_par * Math.random()) );
 	}
-
-	// 停止
+	// 停止処理
 	function stop_prg(id_no) {
     	    clearTimeout(time_id[id_no]);
 	    rotat_f[id_no] = "OFF" ;
@@ -84,17 +94,30 @@
 
 
 		var elem = document.getElementById("msg_box");
+
+		//
+
+	//ゲーム終了後の処理。
+	function finish() {
+        cleartimeout(countdown);
+        subject.textContent = '合計スコアは' + score + 'てでした！';
+        state = false;
+        }
+
 		if (jdg_slot == "won" ){
 		    elem.innerHTML = "<span style='color:red; font-size:28px; font-weight:bold;'> 当たり！（７７７）</span>" ;
 		    score += 200; // 得点を足す
-	        interval *= 0.4;
+	        interval *= 0.4; // スピードを足す
 	        // 得点追加の処理
 	        getScore();
+
 		}else{
 		    elem.innerHTML = "<span style='color:black; font-size:28px; font-weight:bold;'> 外れ！ 残念！</span>" ;
 		}
+
 		rotat_f[3] = "OFF" ;
 	    }
+
 	 // 得点追加時の処理
 	    function getScore() {
 	      var target = document.getElementById('score');
@@ -102,16 +125,90 @@
 	    }
 
 	}
-
+	//ゲームデータの
+	document.getElementById("gameName").value = SurrotGamesite;
+	document.getElementById("gameScore").value = score;
+	document.querySelector("form").submit();
     </script>
 
 
     <style>
+    <div id="slots_a">
+  <div class="wrapper"></div>
+  <div class="slotglass-top"></div>
+
+    <div id="slots_b">
+  <div class="wrapper"></div>
+  <div class="slotglass-top"></div>
+
+  <div id="slots_c">
+  <div class="wrapper"></div>
+  <div class="slotglass-top"></div>
+
+    #slots_a,
+    #slots_b,
+    #slots_c {
+  position: relative;
+  float: left;
+  width: 48px;
+  height: 94px;
+  background-color: white;
+  border: 2px palegoldenrod outset;
+  overflow: hidden;
+}
+
+#slots_a .wrapper,
+#slots_b .wrapper,
+#slots_c .wrapper {
+  position: absolute;
+  width: 46px;
+}
+
+#slots_a .wrapper .slot,
+#slots_b .wrapper .slot,
+#slots_c .wrapper .slot {
+  width: 46px;
+  height: 30px;
+  text-align: center;
+  padding-top: 2px;
+}
+
+.slotglass-top {
+  position: absolute;
+  z-index: 999;
+  width: 46px;
+  height: 15px;
+  background: -moz-linear-gradient(top, rgba(20,20,20,0.3), rgba(20,20,20,0));
+  background: -webkit-gradient(linear, left top, left bottom, from(rgba(20,20,20,0.3)), to(rgba(20,20,20,0)));
+  background: -o-linear-gradient(top, rgba(20,20,20,0.3), rgba(20,20,20,0));
+  background: linear-gradient(top, rgba(20,20,20,0.3), rgba(20,20,20,0));
+}
+
+
+
+    .slotline {
+  position: absolute;
+  z-index: 999;
+  width: 45px;
+  height: 2px;
+  top: 44px;
+  opacity: 0.8;
+  background-color: red;
+}
+
+    #slotbox {
+  background-color: #A1272E;
+  box-shadow: 0px 0px 15px -5px rgba(0, 0, 0, 0.8);
+  border-radius: 5px;
+  width: 185px;
+  padding: 20px;
+}
+
     .slots {
   width: 48px;
   height: 94px;
   border: 2px solid;
-  float: left;
+  float: center;
 }
 .slots .wrapper {
   width: 46px;
@@ -153,25 +250,44 @@
 
 
     	<tr><td align="center">
-    	<input type="button" value="停止" onClick="stop_prg(0)" style="width:80px; height:60px; font-size:22px;">
+    	<input type="button" value="STOP" onClick="stop_prg(0)" style="width:80px; height:60px; font-size:22px;
+    	border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    background-color: gold;">
     	</td>
+
     	<td align="center">
-    	<input type="button" value="停止" onClick="stop_prg(1)" style="width:80px; height:60px; font-size:22px;">
+    	<input type="button" value="STOP" onClick="stop_prg(1)" style="width:80px; height:60px; font-size:22px;
+    	border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    background-color: gold;">
     	</td>
+
     	<td align="center">
-    	<input type="button" value="停止" onClick="stop_prg(2)" style="width:80px; height:60px; font-size:22px;">
+    	<input type="button" value="STOP" onClick="stop_prg(2)" style="width:80px; height:60px; font-size:22px;
+    	border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    background-color: gold;">
     	</td></tr>
 
 	<tr><td colspan="3" style="height:15px;"></td></tr><tr><td colspan="3"></td></tr>
 
 	<tr><td colspan="3">
-    	<input type="button" value="スタート" onClick="start()" style="width:170px; height:60px; font-size:25px;">
+    	<input type="button" value="スタート" onClick="start()" style="width:170px; height:60px; font-size:25px;
+    	border-radius: 10px; background-color: gold;">
     	</td></tr>
 
 
 
     </table>
 
+<form style="visibility: hidden;" action="/C_groupWebProject/GameInspector" method="post">
+    <input type="text" name="game" id="gameName">
+    <input type="text" name="score" id="gameScore">
+</form>
 </body>
 
 </html>
